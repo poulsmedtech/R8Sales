@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import Logo from './Logo'
 import { opportunities } from '../data/content'
@@ -12,11 +12,20 @@ const navLinks = [
   { label: 'Join R8', href: '#join', id: 'join' },
 ]
 
+const DESKTOP_MIN = 1120
+
 export default function Header({ onAction }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [oppsOpen, setOppsOpen] = useState(false)
+  const [mobileOppsOpen, setMobileOppsOpen] = useState(false)
+  const [desktopOppsOpen, setDesktopOppsOpen] = useState(false)
   const menuId = useId()
+  const desktopOppsId = useId()
+  const mobileOppsId = useId()
+  const toggleRef = useRef(null)
+  const mobileNavRef = useRef(null)
+  const desktopOppsRef = useRef(null)
+  const previousOverflow = useRef('')
   const activeSection = useActiveSection()
 
   useEffect(() => {
@@ -29,24 +38,74 @@ export default function Header({ onAction }) {
   }, [])
 
   useEffect(() => {
+    function onResize() {
+      if (window.innerWidth >= DESKTOP_MIN) {
+        setMenuOpen(false)
+        setMobileOppsOpen(false)
+      }
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
     if (!menuOpen) return undefined
-    const previousOverflow = document.body.style.overflow
+
+    previousOverflow.current = document.body.style.overflow
     document.body.style.overflow = 'hidden'
 
+    const focusable = () =>
+      mobileNavRef.current
+        ? [...mobileNavRef.current.querySelectorAll('a, button')].filter((el) => !el.hasAttribute('disabled'))
+        : []
+
+    const frame = requestAnimationFrame(() => {
+      focusable()[0]?.focus()
+    })
+
     function onKey(event) {
-      if (event.key === 'Escape') setMenuOpen(false)
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        setMenuOpen(false)
+        setMobileOppsOpen(false)
+        toggleRef.current?.focus()
+        return
+      }
+      if (event.key !== 'Tab') return
+      const items = focusable()
+      if (items.length === 0) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
 
     document.addEventListener('keydown', onKey)
     return () => {
-      document.body.style.overflow = previousOverflow
+      cancelAnimationFrame(frame)
       document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = previousOverflow.current
     }
   }, [menuOpen])
 
+  useEffect(() => {
+    function onPointer(event) {
+      if (!desktopOppsRef.current?.contains(event.target)) {
+        setDesktopOppsOpen(false)
+      }
+    }
+    document.addEventListener('pointerdown', onPointer)
+    return () => document.removeEventListener('pointerdown', onPointer)
+  }, [])
+
   function closeMenu() {
     setMenuOpen(false)
-    setOppsOpen(false)
+    setMobileOppsOpen(false)
   }
 
   function isActive(id) {
@@ -56,85 +115,111 @@ export default function Header({ onAction }) {
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
       <div className="container header-inner">
-        <Logo variant="dark" />
+        <Logo />
 
         <nav className="desktop-nav" aria-label="Primary">
           {navLinks.map((link) =>
             link.hasMenu ? (
-              <div className="nav-item has-menu" key={link.href}>
+              <div
+                className={`nav-item has-menu${desktopOppsOpen ? ' is-open' : ''}`}
+                key={link.href}
+                ref={desktopOppsRef}
+                onMouseEnter={() => setDesktopOppsOpen(true)}
+                onMouseLeave={() => setDesktopOppsOpen(false)}
+              >
                 <a
                   href={link.href}
                   className={isActive(link.id) ? 'is-active' : undefined}
-                  aria-current={isActive(link.id) ? 'location' : undefined}
+                  aria-current={isActive(link.id) ? 'true' : undefined}
                 >
                   {link.label}
-                  <ChevronDown size={14} aria-hidden="true" />
                 </a>
-                <div className="nav-dropdown" role="menu">
+                <button
+                  type="button"
+                  className="nav-disclosure"
+                  aria-expanded={desktopOppsOpen}
+                  aria-controls={desktopOppsId}
+                  onClick={() => setDesktopOppsOpen((open) => !open)}
+                >
+                  <ChevronDown size={14} aria-hidden="true" />
+                  <span className="sr-only">Show opportunities</span>
+                </button>
+                <ul className="nav-dropdown" id={desktopOppsId} hidden={!desktopOppsOpen}>
                   {opportunities.map((item) => (
-                    <a href={`#${item.id}`} role="menuitem" key={item.id}>
-                      {item.title}
-                    </a>
+                    <li key={item.id}>
+                      <a href={`#${item.id}`} onClick={() => setDesktopOppsOpen(false)}>
+                        {item.title}
+                      </a>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ) : (
               <a
                 href={link.href}
                 key={link.href}
                 className={isActive(link.id) ? 'is-active' : undefined}
-                aria-current={isActive(link.id) ? 'location' : undefined}
+                aria-current={isActive(link.id) ? 'true' : undefined}
               >
                 {link.label}
               </a>
             ),
           )}
+        </nav>
+
+        <div className="header-actions">
           <button type="button" className="nav-text-btn" onClick={() => onAction('Agent Login')}>
             Agent Login
           </button>
           <button type="button" className="btn btn-navy btn-compact" onClick={() => onAction('Contact Us')}>
             Contact Us
           </button>
-        </nav>
-
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-expanded={menuOpen}
-          aria-controls={menuId}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-          <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
-        </button>
+          <button
+            type="button"
+            className="menu-toggle"
+            ref={toggleRef}
+            aria-expanded={menuOpen}
+            aria-controls={menuId}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+          </button>
+        </div>
       </div>
 
-      <div className={`mobile-nav${menuOpen ? ' is-open' : ''}`} id={menuId} hidden={!menuOpen}>
+      <div
+        className={`mobile-nav${menuOpen ? ' is-open' : ''}`}
+        id={menuId}
+        hidden={!menuOpen}
+        ref={mobileNavRef}
+      >
         <nav aria-label="Mobile">
           {navLinks.map((link) =>
             link.hasMenu ? (
               <div key={link.href}>
-                <button
-                  type="button"
-                  className="mobile-accordion"
-                  aria-expanded={oppsOpen}
-                  onClick={() => setOppsOpen((open) => !open)}
-                >
-                  {link.label}
-                  <ChevronDown size={16} aria-hidden="true" />
-                </button>
-                {oppsOpen && (
-                  <div className="mobile-subnav">
-                    <a href="#opportunities" onClick={closeMenu}>
-                      View all opportunities
+                <div className="mobile-opps-row">
+                  <a href={link.href} onClick={closeMenu}>
+                    {link.label}
+                  </a>
+                  <button
+                    type="button"
+                    className="mobile-accordion"
+                    aria-expanded={mobileOppsOpen}
+                    aria-controls={mobileOppsId}
+                    onClick={() => setMobileOppsOpen((open) => !open)}
+                  >
+                    <ChevronDown size={16} aria-hidden="true" />
+                    <span className="sr-only">Show opportunity list</span>
+                  </button>
+                </div>
+                <div className="mobile-subnav" id={mobileOppsId} hidden={!mobileOppsOpen}>
+                  {opportunities.map((item) => (
+                    <a href={`#${item.id}`} onClick={closeMenu} key={item.id}>
+                      {item.title}
                     </a>
-                    {opportunities.map((item) => (
-                      <a href={`#${item.id}`} onClick={closeMenu} key={item.id}>
-                        {item.title}
-                      </a>
-                    ))}
-                  </div>
-                )}
+                  ))}
+                </div>
               </div>
             ) : (
               <a href={link.href} onClick={closeMenu} key={link.href}>

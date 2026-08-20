@@ -26,12 +26,19 @@ The finished files are written to the `dist` folder.
 
 - `src/` — page layout, sections, and styles
 - `public/images/` — local photos used on the site
+- `public/fonts/` — font licenses for the self-hosted typefaces
 - `prompts/` — original build instructions
 - `MockUp1.png` — visual reference for the design
 
-Buttons such as Learn More, Agent Login, Contact Us, and the founder video currently open a placeholder message. They are ready to be connected later.
+“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Other buttons such as Learn More, Agent Login, Contact Us, and the founder video open a placeholder message with the matching title. They are ready to be connected later.
 
-Hero skyline photograph by [Andre Benz](https://unsplash.com/photos/city-skyline-during-night-time-cXU6tNxhub0) / Unsplash. Founder portrait is a local project asset.
+## Credits and local assets
+
+- Night skyline photograph: [Toronto Skyline at night](https://commons.wikimedia.org/wiki/File:Toronto_Skyline_at_night_-b.jpg) by veggiefrog, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Cropped and converted for this site.
+- Founder portrait is a local project asset.
+- Inter and Plus Jakarta Sans are self-hosted. Licenses are in `public/fonts/`.
+
+A production sitemap and absolute social-preview URLs will be added after the live DigitalOcean or custom domain is known. Do not invent that URL in the meantime.
 
 ## Repository Safety
 
@@ -53,8 +60,10 @@ DigitalOcean should connect to the GitHub repository **poulsmedtech/R8Sales**, b
 
 Use these values:
 
+- **Resource type:** Static Site
 - **Build command:** `npm run build`
 - **Output directory:** `dist`
+- **Run command:** none
 - **Node.js:** `20`
 - **Environment variables:** none
 - **Catch-all / rewrite rules:** none
@@ -63,6 +72,6 @@ Use these values:
 ### Deployment checklist
 
 1. Confirm the latest commit is visible on GitHub at [poulsmedtech/R8Sales](https://github.com/poulsmedtech/R8Sales).
-2. Create a new DigitalOcean App Platform app and connect that GitHub repository.
-3. Enter the settings above, then wait for a successful build.
+2. In DigitalOcean, confirm the app is connected to that repository and branch `main`.
+3. Wait for a successful build after each push to `main`.
 4. Open the URL DigitalOcean provides and review the live site.

@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef } from 'react'
 import { X } from 'lucide-react'
 
-export default function Modal({ open, title, message, onClose }) {
+export default function Modal({ open, title, subtitle, message, note, onClose }) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const previousFocus = useRef(null)
@@ -86,7 +86,11 @@ export default function Modal({ open, title, message, onClose }) {
         </button>
         <p className="eyebrow">Coming soon</p>
         <h2 id={titleId}>{title}</h2>
-        <p id={descId}>{message}</p>
+        <div id={descId} className="modal-copy">
+          {subtitle ? <p className="modal-subtitle">{subtitle}</p> : null}
+          {message ? <p>{message}</p> : null}
+          {note ? <p className="modal-note">{note}</p> : null}
+        </div>
         <button type="button" className="btn btn-primary" onClick={onClose}>
           Close
         </button>

@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react'
 import Logo from './Logo'
 
 const quickLinks = [
@@ -20,7 +20,7 @@ export default function Footer({ onAction }) {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Logo variant="dark" />
+          <Logo />
           <p>© 2026 R8 Sales. All rights reserved.</p>
         </div>
 
@@ -64,19 +64,15 @@ export default function Footer({ onAction }) {
               Nationwide
             </li>
           </ul>
-        </div>
-
-        <div>
-          <h2>Follow Us</h2>
           <div className="social-row">
-            <button type="button" aria-label="LinkedIn" onClick={() => onAction('LinkedIn')}>
-              <Linkedin size={18} aria-hidden="true" />
-            </button>
             <button type="button" aria-label="Facebook" onClick={() => onAction('Facebook')}>
-              <Facebook size={18} aria-hidden="true" />
+              <Facebook size={16} aria-hidden="true" />
             </button>
-            <button type="button" aria-label="Instagram" onClick={() => onAction('Instagram')}>
-              <Instagram size={18} aria-hidden="true" />
+            <button type="button" aria-label="LinkedIn" onClick={() => onAction('LinkedIn')}>
+              <Linkedin size={16} aria-hidden="true" />
+            </button>
+            <button type="button" aria-label="YouTube" onClick={() => onAction('YouTube')}>
+              <Youtube size={16} aria-hidden="true" />
             </button>
           </div>
         </div>

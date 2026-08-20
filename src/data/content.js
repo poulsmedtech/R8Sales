@@ -160,19 +160,93 @@ export const audiences = [
   {
     title: 'For Individual Agents',
     description: 'Choose the programs that fit your selling style and goals.',
+    icon: 'user',
   },
   {
     title: 'For Sales Managers',
     description:
       'Bring powerful programs to your team and increase their earning potential.',
+    icon: 'users',
   },
   {
     title: 'For Large Organizations',
     description:
       'Add new products and verticals and scale your business faster.',
+    icon: 'building',
   },
 ]
 
-export function placeholderMessage(title) {
-  return `${title} is being prepared for the live site. This preview uses placeholder actions so you can review the full layout, wording, and calls to action before login, contact forms, and program details are connected.`
+export const actionDetails = {
+  'Agent Login': {
+    title: 'Agent Login',
+    body: 'The agent login portal is not connected in this preview. When it is live, current agents and managers will sign in here to access their workspace.',
+  },
+  'Contact Us': {
+    title: 'Contact Us',
+    body: 'A contact form will be added here. Until then, you can reach R8 Sales at (626) 389-2168 or hao@r8marketing.com.',
+  },
+  'Join the R8 Network': {
+    title: 'Join the R8 Network',
+    body: 'A join request will be available here. This preview does not collect applications or personal information.',
+  },
+  'Watch Video Message': {
+    title: 'Watch Video Message',
+    body: 'Hao Zhang’s recorded message will play here when the final video is published. This preview does not embed a stand-in video.',
+  },
+  LinkedIn: {
+    title: 'LinkedIn',
+    body: 'An official LinkedIn page is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
+  },
+  Facebook: {
+    title: 'Facebook',
+    body: 'An official Facebook page is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
+  },
+  YouTube: {
+    title: 'YouTube',
+    body: 'An official YouTube channel is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
+  },
+  'Privacy Policy': {
+    title: 'Privacy Policy',
+    body: 'The privacy policy will be published here before the site is used to collect personal information. This preview does not include legal terms.',
+  },
+  'Terms of Use': {
+    title: 'Terms of Use',
+    body: 'The terms of use will be published here before the site is used for live applications or account access. This preview does not include legal terms.',
+  },
+  FAQ: {
+    title: 'FAQ',
+    body: 'Answers to common questions from agents and managers will appear here.',
+  },
+  'Training & Resources': {
+    title: 'Training & Resources',
+    body: 'Training materials and resources for agents and managers will be published here.',
+  },
+}
+
+export function getActionContent(title) {
+  return (
+    actionDetails[title] ?? {
+      title,
+      body: `${title} is being prepared for the live site.`,
+    }
+  )
+}
+
+export function getOpportunityContent(item) {
+  return {
+    title: item.title,
+    subtitle: item.subtitle,
+    body: item.description,
+    note: 'Full program details, qualifications, and earning information are coming soon.',
+  }
+}
+
+export function scrollToId(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  if (typeof el.focus === 'function') {
+    el.focus({ preventScroll: true })
+  }
 }

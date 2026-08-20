@@ -23,7 +23,7 @@ const icons = {
   sparkles: Sparkles,
 }
 
-export default function Opportunities({ onAction }) {
+export default function Opportunities({ onLearnMore }) {
   useEffect(() => {
     function emphasizeTarget() {
       const id = window.location.hash.replace('#', '')
@@ -41,7 +41,7 @@ export default function Opportunities({ onAction }) {
   }, [])
 
   return (
-    <section className="opportunities" id="opportunities">
+    <section className="opportunities" id="opportunities" tabIndex={-1}>
       <div className="container">
         <div className="section-intro">
           <p className="eyebrow">Our Opportunities</p>
@@ -66,7 +66,7 @@ export default function Opportunities({ onAction }) {
                 <button
                   type="button"
                   className="text-link"
-                  onClick={() => onAction(item.title)}
+                  onClick={() => onLearnMore(item)}
                 >
                   Learn More
                   <ArrowRight size={14} aria-hidden="true" />

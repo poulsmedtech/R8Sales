@@ -1,11 +1,25 @@
+import { Building2, UserRound, Users } from 'lucide-react'
 import { audiences, partners } from '../data/content'
+
+const audienceIcons = {
+  user: UserRound,
+  users: Users,
+  building: Building2,
+}
 
 export default function AboutHao() {
   return (
     <section className="about" id="about">
       <div className="container about-grid">
         <figure className="about-photo">
-          <img src="/images/hao-zhang.jpg" alt="Portrait of Hao Zhang, founder of R8 Sales" />
+          <img
+            src="/images/hao-zhang.webp"
+            alt="Portrait of Hao Zhang, founder of R8 Sales"
+            width="800"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
         </figure>
 
         <div className="about-copy">
@@ -35,12 +49,18 @@ export default function AboutHao() {
         </div>
 
         <div className="audience-panel">
-          {audiences.map((item) => (
-            <article key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
+          {audiences.map((item) => {
+            const Icon = audienceIcons[item.icon]
+            return (
+              <article key={item.title}>
+                <h3>
+                  <Icon size={16} aria-hidden="true" />
+                  {item.title}
+                </h3>
+                <p>{item.description}</p>
+              </article>
+            )
+          })}
         </div>
       </div>
     </section>

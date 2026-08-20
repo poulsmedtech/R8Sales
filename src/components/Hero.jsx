@@ -1,17 +1,30 @@
+import { ArrowRight } from 'lucide-react'
 import { heroPrinciples } from '../data/content'
 
-export default function Hero({ onAction }) {
+export default function Hero({ onExplore }) {
   return (
     <section className="hero" id="home">
       <div className="hero-media" aria-hidden="true">
-        <img src="/images/hero-skyline.jpg" alt="" />
+        <picture>
+          <source type="image/webp" media="(max-width: 700px)" srcSet="/images/hero-800.webp" />
+          <source type="image/webp" srcSet="/images/hero-1600.webp" />
+          <img
+            src="/images/hero-1600.webp"
+            alt=""
+            width="1600"
+            height="1067"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
+        <img className="hero-people" src="/images/hero-people.svg" alt="" width="640" height="90" />
       </div>
       <div className="container hero-grid">
         <div className="hero-copy">
           <h1>
             One Network.
-            <span>Multiple Opportunities.</span>
-            <span>Unlimited Potential.</span>
+            <span className="hero-line">Multiple Opportunities.</span>
+            <span className="hero-accent">Unlimited Potential.</span>
           </h1>
           <p>
             R8 Sales brings together proven sales leadership, a nationwide network of
@@ -22,12 +35,9 @@ export default function Hero({ onAction }) {
             <strong>We do the work of finding and evaluating the programs.</strong> You decide
             which opportunities are right for you.
           </p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => onAction('Explore Our Opportunities')}
-          >
+          <button type="button" className="btn btn-primary" onClick={onExplore}>
             Explore Our Opportunities
+            <ArrowRight size={15} aria-hidden="true" />
           </button>
         </div>
 
