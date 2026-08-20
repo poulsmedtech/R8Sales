@@ -24,7 +24,7 @@ const icons = {
 export default function Benefits() {
   return (
     <section className="benefits" id="why-r8">
-      <div className="container">
+      <div className="container benefits-layout">
         <div className="benefits-intro">
           <p className="eyebrow">Why R8?</p>
           <h2>We Build Opportunities Around You.</h2>
@@ -43,7 +43,7 @@ export default function Benefits() {
                   {item.n}
                 </span>
                 <span className="benefit-icon" aria-hidden="true">
-                  <Icon size={26} strokeWidth={1.8} />
+                  <Icon size={22} strokeWidth={1.8} />
                 </span>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>

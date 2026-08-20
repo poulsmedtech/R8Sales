@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   Activity,
   ArrowRight,
@@ -23,6 +24,22 @@ const icons = {
 }
 
 export default function Opportunities({ onAction }) {
+  useEffect(() => {
+    function emphasizeTarget() {
+      const id = window.location.hash.replace('#', '')
+      const card = opportunities.some((item) => item.id === id)
+        ? document.getElementById(id)
+        : null
+      if (card instanceof HTMLElement) {
+        card.focus({ preventScroll: true })
+      }
+    }
+
+    emphasizeTarget()
+    window.addEventListener('hashchange', emphasizeTarget)
+    return () => window.removeEventListener('hashchange', emphasizeTarget)
+  }, [])
+
   return (
     <section className="opportunities" id="opportunities">
       <div className="container">
@@ -39,9 +56,9 @@ export default function Opportunities({ onAction }) {
           {opportunities.map((item) => {
             const Icon = icons[item.icon]
             return (
-              <li className="opportunity-card" key={item.id}>
+              <li className="opportunity-card" id={item.id} key={item.id} tabIndex={-1}>
                 <span className={`icon-badge tone-${item.tone}`} aria-hidden="true">
-                  <Icon size={22} strokeWidth={2.1} />
+                  <Icon size={20} strokeWidth={2.1} />
                 </span>
                 <h3>{item.title}</h3>
                 <p className="card-kicker">{item.subtitle}</p>
@@ -52,7 +69,7 @@ export default function Opportunities({ onAction }) {
                   onClick={() => onAction(item.title)}
                 >
                   Learn More
-                  <ArrowRight size={15} aria-hidden="true" />
+                  <ArrowRight size={14} aria-hidden="true" />
                 </button>
               </li>
             )

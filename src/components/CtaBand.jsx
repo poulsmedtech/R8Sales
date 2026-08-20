@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Network } from 'lucide-react'
 
 export default function CtaBand({ onAction }) {
   return (
@@ -6,7 +6,7 @@ export default function CtaBand({ onAction }) {
       <div className="container cta-inner">
         <div className="cta-copy">
           <span className="cta-icon" aria-hidden="true">
-            R8
+            <Network size={28} strokeWidth={1.8} />
           </span>
           <div>
             <h2>Your Next Opportunity May Be Here.</h2>
@@ -23,11 +23,11 @@ export default function CtaBand({ onAction }) {
             onClick={() => onAction('View All Opportunities')}
           >
             View All Opportunities
-            <ArrowRight size={16} aria-hidden="true" />
+            <ArrowRight size={15} aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="btn btn-navy"
+            className="btn btn-on-dark"
             onClick={() => onAction('Join the R8 Network')}
           >
             Join the R8 Network

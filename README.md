@@ -1,6 +1,6 @@
 # R8 Sales Group Website
 
-A public marketing website for R8 Sales Group. It is a single-page site that visitors can review in a browser after it is connected to DigitalOcean App Platform.
+A public marketing website for R8 Sales Group. It is a single-page site meant to be connected to DigitalOcean App Platform from GitHub.
 
 ## Local preview
 
@@ -33,17 +33,36 @@ Buttons such as Learn More, Agent Login, Contact Us, and the founder video curre
 
 Hero skyline photograph by [Andre Benz](https://unsplash.com/photos/city-skyline-during-night-time-cXU6tNxhub0) / Unsplash. Founder portrait is a local project asset.
 
+## Repository Safety
+
+This project is its own Git repository. It has its own `.git` folder and its own commit history. It is not part of any nearby parent project.
+
+- The Git root must be `/Users/samanthapouls/Desktop/R8Sales`.
+- The expected remote is `https://github.com/poulsmedtech/R8Sales.git`.
+- Before committing or pushing, confirm both of these:
+  - `git rev-parse --show-toplevel` returns `/Users/samanthapouls/Desktop/R8Sales`
+  - `git remote -v` shows the R8Sales GitHub URL above
+- Run Git commands for this website from inside the R8Sales folder only.
+- Do not stage, commit, or push the parent repository while working on R8Sales.
+- Do not force-push or use destructive resets unless the owner explicitly authorizes that.
+- Do not commit secrets, credentials, `.env` files, `node_modules`, or the `dist` build folder.
 
 ## DigitalOcean App Platform settings
 
-Create a **Static Site** app pointed at this repository, then use these values:
+DigitalOcean should connect to the GitHub repository **poulsmedtech/R8Sales**, branch **main**, as a **Static Site**.
 
-- **Resource type:** Static Site
+Use these values:
+
 - **Build command:** `npm run build`
 - **Output directory:** `dist`
-- **HTTP port:** leave the default
-- **Node version:** `20`
-- **Environment variables:** none required
-- **Catch-all / rewrite rules:** not required
+- **Node.js:** `20`
+- **Environment variables:** none
+- **Catch-all / rewrite rules:** none
+- **Automatic deploys from `main`:** enabled
 
-The site is fully client-side. After the first deploy, DigitalOcean will provide a live URL you can open in a browser.
+### Deployment checklist
+
+1. Confirm the latest commit is visible on GitHub at [poulsmedtech/R8Sales](https://github.com/poulsmedtech/R8Sales).
+2. Create a new DigitalOcean App Platform app and connect that GitHub repository.
+3. Enter the settings above, then wait for a successful build.
+4. Open the URL DigitalOcean provides and review the live site.
