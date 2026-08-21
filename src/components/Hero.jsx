@@ -21,13 +21,13 @@ export default function Hero({ onExplore }) {
       </div>
       <div className="container hero-grid">
         <div className="hero-copy">
-          <h1>
+          <h1 tabIndex={-1}>
             One Network.
             <span className="hero-line">Multiple Opportunities.</span>
             <span className="hero-accent">Unlimited Potential.</span>
           </h1>
           <p>
-            R8 Sales brings together proven sales leadership, a nationwide network of
+            R8 Sales Group brings together proven sales leadership, a nationwide network of
             experienced agents and managers, and a continually evolving portfolio of sales
             opportunities.
           </p>

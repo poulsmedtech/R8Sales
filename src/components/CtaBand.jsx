@@ -1,8 +1,11 @@
 import { ArrowRight, UsersRound } from 'lucide-react'
+import useReveal from '../hooks/useReveal'
 
 export default function CtaBand({ onAction, onExplore }) {
+  const { ref, revealClass } = useReveal()
+
   return (
-    <section className="cta-band" id="join">
+    <section className={`cta-band ${revealClass}`} id="join" ref={ref}>
       <div className="container cta-inner">
         <div className="cta-copy">
           <span className="cta-icon" aria-hidden="true">
@@ -11,7 +14,7 @@ export default function CtaBand({ onAction, onExplore }) {
           <div>
             <h2>Your Next Opportunity May Be Here.</h2>
             <p>
-              Explore the programs available through R8 Sales. See what they offer. See who
+              Explore the programs available through R8 Sales Group. See what they offer. See who
               qualifies. See what you can earn. Then decide what’s right for you.
             </p>
           </div>

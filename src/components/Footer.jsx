@@ -1,5 +1,6 @@
 import { Facebook, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react'
 import Logo from './Logo'
+import { contactDetails } from '../data/content'
 
 const quickLinks = [
   { label: 'Home', href: '#home' },
@@ -20,7 +21,7 @@ export default function Footer({ onAction }) {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Logo />
-          <p>© 2026 R8 Sales. All rights reserved.</p>
+          <p>© 2026 R8 Sales Group. All rights reserved.</p>
         </div>
 
         <div>
@@ -52,11 +53,11 @@ export default function Footer({ onAction }) {
           <ul className="contact-list">
             <li>
               <Phone size={16} aria-hidden="true" />
-              <a href="tel:+16263892168">(626) 389-2168</a>
+              <a href={contactDetails.phoneHref}>{contactDetails.phoneDisplay}</a>
             </li>
             <li>
               <Mail size={16} aria-hidden="true" />
-              <a href="mailto:hao@r8marketing.com">hao@r8marketing.com</a>
+              <a href={contactDetails.emailHref}>{contactDetails.emailDisplay}</a>
             </li>
             <li>
               <MapPin size={16} aria-hidden="true" />

@@ -1,6 +1,7 @@
 import { Building2, UserRound, Users } from 'lucide-react'
 import { audiences, partners } from '../data/content'
 import MediaPlaceholder from './MediaPlaceholder'
+import useReveal from '../hooks/useReveal'
 
 const audienceIcons = {
   user: UserRound,
@@ -9,8 +10,10 @@ const audienceIcons = {
 }
 
 export default function AboutHao() {
+  const { ref, revealClass } = useReveal()
+
   return (
-    <section className="about" id="about">
+    <section className={`about ${revealClass}`} id="about" ref={ref}>
       <div className="container about-grid">
         <figure className="about-photo">
           <MediaPlaceholder variant="portrait" label="Founder portrait coming soon" />
@@ -37,7 +40,7 @@ export default function AboutHao() {
 
           <p className="about-close">
             Today, Hao brings together the experience, relationships and nationwide network
-            he has built throughout his career through R8 Sales—one platform to put
+            he has built throughout his career through R8 Sales Group—one platform to put
             exceptional opportunities in the hands of exceptional people.
           </p>
         </div>

@@ -1,7 +1,16 @@
 import { useEffect, useId, useRef } from 'react'
-import { X } from 'lucide-react'
+import { Mail, Phone, X } from 'lucide-react'
 
-export default function Modal({ open, title, subtitle, message, note, onClose }) {
+export default function Modal({
+  open,
+  title,
+  subtitle,
+  message,
+  note,
+  eyebrow = 'Coming soon',
+  contacts,
+  onClose,
+}) {
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const previousFocus = useRef(null)
@@ -84,11 +93,35 @@ export default function Modal({ open, title, subtitle, message, note, onClose })
         >
           <X size={20} strokeWidth={2.2} aria-hidden="true" />
         </button>
-        <p className="eyebrow">Coming soon</p>
+        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
         <h2 id={titleId}>{title}</h2>
         <div id={descId} className="modal-copy">
           {subtitle ? <p className="modal-subtitle">{subtitle}</p> : null}
           {message ? <p>{message}</p> : null}
+          {contacts ? (
+            <div className="contact-panel">
+              <ul className="contact-panel-list">
+                <li>
+                  <Phone size={16} aria-hidden="true" />
+                  <a href={contacts.phone.href}>{contacts.phone.display}</a>
+                </li>
+                <li>
+                  <Mail size={16} aria-hidden="true" />
+                  <a href={contacts.email.href}>{contacts.email.display}</a>
+                </li>
+              </ul>
+              <div className="contact-panel-actions">
+                <a className="btn btn-primary" href={contacts.phone.href}>
+                  <Phone size={15} aria-hidden="true" />
+                  Call
+                </a>
+                <a className="btn btn-navy" href={contacts.email.href}>
+                  <Mail size={15} aria-hidden="true" />
+                  Email
+                </a>
+              </div>
+            </div>
+          ) : null}
           {note ? <p className="modal-note">{note}</p> : null}
         </div>
         <button type="button" className="btn btn-primary" onClick={onClose}>

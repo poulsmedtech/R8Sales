@@ -13,6 +13,16 @@ npm run dev
 
 Then open the local address shown in the terminal, usually `http://localhost:5173`.
 
+## Checks
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+`npm test` runs once and exits. The checks stay on this machine and do not need a live website.
+
 ## Production build
 
 ```bash
@@ -30,7 +40,7 @@ The finished files are written to the `dist` folder.
 - `prompts/` — original build instructions
 - `MockUp1.png` — visual reference for the design
 
-“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Other buttons such as Learn More, Contact Us, and the founder video open a placeholder message with the matching title. They are ready to be connected later.
+“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards and the founder video still open a matching message. They are ready to be connected later.
 
 The founder video and portrait areas are image-free placeholders until approved assets are ready. Recommended replacement sizes:
 

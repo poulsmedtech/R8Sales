@@ -9,6 +9,7 @@ import {
   UsersRound,
 } from 'lucide-react'
 import { benefits } from '../data/content'
+import useReveal from '../hooks/useReveal'
 
 const icons = {
   package: Package,
@@ -22,8 +23,10 @@ const icons = {
 }
 
 export default function Benefits() {
+  const { ref, revealClass } = useReveal()
+
   return (
-    <section className="benefits" id="why-r8">
+    <section className={`benefits ${revealClass}`} id="why-r8" ref={ref}>
       <div className="container benefits-layout">
         <div className="benefits-intro">
           <p className="eyebrow">Why R8?</p>

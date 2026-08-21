@@ -14,7 +14,7 @@ const navLinks = [
 
 const DESKTOP_MIN = 1120
 
-export default function Header({ onAction }) {
+export default function Header({ onAction, onMenuChange }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileOppsOpen, setMobileOppsOpen] = useState(false)
@@ -28,6 +28,10 @@ export default function Header({ onAction }) {
   const desktopDisclosureRef = useRef(null)
   const previousOverflow = useRef('')
   const activeSection = useActiveSection()
+
+  useEffect(() => {
+    onMenuChange?.(menuOpen)
+  }, [menuOpen, onMenuChange])
 
   useEffect(() => {
     function onScroll() {

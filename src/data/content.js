@@ -176,10 +176,28 @@ export const audiences = [
   },
 ]
 
+export const contactDetails = {
+  phoneDisplay: '(626) 389-2168',
+  phoneHref: 'tel:+16263892168',
+  emailDisplay: 'hao@r8marketing.com',
+  emailHref: 'mailto:hao@r8marketing.com',
+}
+
 export const actionDetails = {
   'Contact Us': {
     title: 'Contact Us',
-    body: 'A contact form will be added here. Until then, you can reach R8 Sales at (626) 389-2168 or hao@r8marketing.com.',
+    eyebrow: null,
+    body: 'Call or email R8 Sales Group directly. We welcome questions from agents, managers, and organizations.',
+    contacts: {
+      phone: {
+        display: contactDetails.phoneDisplay,
+        href: contactDetails.phoneHref,
+      },
+      email: {
+        display: contactDetails.emailDisplay,
+        href: contactDetails.emailHref,
+      },
+    },
   },
   'Join the R8 Network': {
     title: 'Join the R8 Network',

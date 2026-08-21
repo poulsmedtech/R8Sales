@@ -22,7 +22,7 @@ export default class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="error-fallback">
-          <p className="eyebrow">R8 Sales</p>
+          <p className="eyebrow">R8 Sales Group</p>
           <h1>This page hit a snag.</h1>
           <p>
             Something unexpected went wrong while loading the site. You can try again, or

@@ -11,6 +11,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { opportunities } from '../data/content'
+import useReveal from '../hooks/useReveal'
 
 const icons = {
   zap: Zap,
@@ -24,6 +25,8 @@ const icons = {
 }
 
 export default function Opportunities({ onLearnMore }) {
+  const { ref, revealClass } = useReveal()
+
   useEffect(() => {
     function emphasizeTarget() {
       const id = window.location.hash.replace('#', '')
@@ -41,7 +44,7 @@ export default function Opportunities({ onLearnMore }) {
   }, [])
 
   return (
-    <section className="opportunities" id="opportunities" tabIndex={-1}>
+    <section className={`opportunities ${revealClass}`} id="opportunities" tabIndex={-1} ref={ref}>
       <div className="container">
         <div className="section-intro">
           <p className="eyebrow">Our Opportunities</p>
@@ -56,20 +59,24 @@ export default function Opportunities({ onLearnMore }) {
           {opportunities.map((item) => {
             const Icon = icons[item.icon]
             return (
-              <li className="opportunity-card" id={item.id} key={item.id} tabIndex={-1}>
-                <span className={`icon-badge tone-${item.tone}`} aria-hidden="true">
-                  <Icon size={20} strokeWidth={2.1} />
-                </span>
-                <h3>{item.title}</h3>
-                <p className="card-kicker">{item.subtitle}</p>
-                <p>{item.description}</p>
+              <li key={item.id}>
                 <button
                   type="button"
-                  className="text-link"
+                  className="opportunity-card"
+                  id={item.id}
                   onClick={() => onLearnMore(item)}
+                  aria-label={`Learn more about ${item.title}`}
                 >
-                  Learn More
-                  <ArrowRight size={14} aria-hidden="true" />
+                  <span className={`icon-badge tone-${item.tone}`} aria-hidden="true">
+                    <Icon size={20} strokeWidth={2.1} />
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p className="card-kicker">{item.subtitle}</p>
+                  <p>{item.description}</p>
+                  <span className="text-link" aria-hidden="true">
+                    Learn More
+                    <ArrowRight size={14} />
+                  </span>
                 </button>
               </li>
             )

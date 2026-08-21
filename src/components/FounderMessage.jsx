@@ -1,15 +1,22 @@
 import { Play } from 'lucide-react'
 import MediaPlaceholder from './MediaPlaceholder'
+import useReveal from '../hooks/useReveal'
 
 export default function FounderMessage({ onAction }) {
+  const { ref, revealClass } = useReveal()
+
   return (
-    <section className="founder-message" aria-labelledby="founder-message-title">
+    <section
+      className={`founder-message ${revealClass}`}
+      aria-labelledby="founder-message-title"
+      ref={ref}
+    >
       <div className="container founder-message-grid">
         <div>
           <p className="eyebrow">A Message from Hao Zhang</p>
-          <h2 id="founder-message-title">Why I Created R8 Sales</h2>
+          <h2 id="founder-message-title">Why I Created R8 Sales Group</h2>
           <p>
-            Watch Hao explain his vision for R8 Sales and how we help agents and managers
+            Watch Hao explain his vision for R8 and how we help agents and managers
             build successful, profitable businesses.
           </p>
           <button

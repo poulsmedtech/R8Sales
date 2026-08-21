@@ -8,10 +8,12 @@ import AboutHao from './components/AboutHao'
 import CtaBand from './components/CtaBand'
 import Footer from './components/Footer'
 import Modal from './components/Modal'
+import BackToTop from './components/BackToTop'
 import { getActionContent, getOpportunityContent, scrollToId } from './data/content'
 
 export default function App() {
   const [modal, setModal] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const openAction = useCallback((title) => {
     setModal(getActionContent(title))
@@ -32,7 +34,7 @@ export default function App() {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <Header onAction={openAction} />
+      <Header onAction={openAction} onMenuChange={setMenuOpen} />
       <main id="main-content" tabIndex={-1}>
         <Hero onExplore={goToOpportunities} />
         <FounderMessage onAction={openAction} />
@@ -42,12 +44,15 @@ export default function App() {
         <CtaBand onAction={openAction} onExplore={goToOpportunities} />
       </main>
       <Footer onAction={openAction} />
+      <BackToTop overlayOpen={Boolean(modal) || menuOpen} />
       <Modal
         open={Boolean(modal)}
         title={modal?.title ?? ''}
         subtitle={modal?.subtitle}
         message={modal?.body ?? ''}
         note={modal?.note}
+        eyebrow={modal?.eyebrow}
+        contacts={modal?.contacts}
         onClose={closeModal}
       />
     </>
