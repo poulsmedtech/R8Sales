@@ -25,6 +25,7 @@ export default function Header({ onAction }) {
   const toggleRef = useRef(null)
   const mobileNavRef = useRef(null)
   const desktopOppsRef = useRef(null)
+  const desktopDisclosureRef = useRef(null)
   const previousOverflow = useRef('')
   const activeSection = useActiveSection()
 
@@ -42,6 +43,8 @@ export default function Header({ onAction }) {
       if (window.innerWidth >= DESKTOP_MIN) {
         setMenuOpen(false)
         setMobileOppsOpen(false)
+      } else {
+        setDesktopOppsOpen(false)
       }
     }
     window.addEventListener('resize', onResize)
@@ -99,9 +102,22 @@ export default function Header({ onAction }) {
         setDesktopOppsOpen(false)
       }
     }
+
+    function onKey(event) {
+      if (event.key === 'Escape' && desktopOppsOpen) {
+        event.preventDefault()
+        setDesktopOppsOpen(false)
+        desktopDisclosureRef.current?.focus()
+      }
+    }
+
     document.addEventListener('pointerdown', onPointer)
-    return () => document.removeEventListener('pointerdown', onPointer)
-  }, [])
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointer)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [desktopOppsOpen])
 
   function closeMenu() {
     setMenuOpen(false)
@@ -137,6 +153,7 @@ export default function Header({ onAction }) {
                 <button
                   type="button"
                   className="nav-disclosure"
+                  ref={desktopDisclosureRef}
                   aria-expanded={desktopOppsOpen}
                   aria-controls={desktopOppsId}
                   onClick={() => setDesktopOppsOpen((open) => !open)}
@@ -168,9 +185,6 @@ export default function Header({ onAction }) {
         </nav>
 
         <div className="header-actions">
-          <button type="button" className="nav-text-btn" onClick={() => onAction('Agent Login')}>
-            Agent Login
-          </button>
           <button type="button" className="btn btn-navy btn-compact" onClick={() => onAction('Contact Us')}>
             Contact Us
           </button>
@@ -227,15 +241,6 @@ export default function Header({ onAction }) {
               </a>
             ),
           )}
-          <button
-            type="button"
-            onClick={() => {
-              closeMenu()
-              onAction('Agent Login')
-            }}
-          >
-            Agent Login
-          </button>
           <button
             type="button"
             className="btn btn-navy"

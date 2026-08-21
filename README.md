@@ -30,12 +30,16 @@ The finished files are written to the `dist` folder.
 - `prompts/` — original build instructions
 - `MockUp1.png` — visual reference for the design
 
-“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Other buttons such as Learn More, Agent Login, Contact Us, and the founder video open a placeholder message with the matching title. They are ready to be connected later.
+“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Other buttons such as Learn More, Contact Us, and the founder video open a placeholder message with the matching title. They are ready to be connected later.
+
+The founder video and portrait areas are image-free placeholders until approved assets are ready. Recommended replacement sizes:
+
+- Founder video still or frame: **1600×900** (16:9)
+- Founder portrait: about **1200×1600** (3:4)
 
 ## Credits and local assets
 
 - Night skyline photograph: [Toronto Skyline at night](https://commons.wikimedia.org/wiki/File:Toronto_Skyline_at_night_-b.jpg) by veggiefrog, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Cropped and converted for this site.
-- Founder portrait is a local project asset.
 - Inter and Plus Jakarta Sans are self-hosted. Licenses are in `public/fonts/`.
 
 A production sitemap and absolute social-preview URLs will be added after the live DigitalOcean or custom domain is known. Do not invent that URL in the meantime.

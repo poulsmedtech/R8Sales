@@ -10,7 +10,6 @@ const quickLinks = [
 
 const agentLinks = [
   { label: 'Join R8 Network', action: 'Join the R8 Network' },
-  { label: 'Agent Login', action: 'Agent Login' },
   { label: 'Training & Resources', action: 'Training & Resources' },
   { label: 'FAQ', action: 'FAQ' },
 ]

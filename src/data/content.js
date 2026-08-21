@@ -177,10 +177,6 @@ export const audiences = [
 ]
 
 export const actionDetails = {
-  'Agent Login': {
-    title: 'Agent Login',
-    body: 'The agent login portal is not connected in this preview. When it is live, current agents and managers will sign in here to access their workspace.',
-  },
   'Contact Us': {
     title: 'Contact Us',
     body: 'A contact form will be added here. Until then, you can reach R8 Sales at (626) 389-2168 or hao@r8marketing.com.',

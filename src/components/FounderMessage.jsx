@@ -1,4 +1,5 @@
 import { Play } from 'lucide-react'
+import MediaPlaceholder from './MediaPlaceholder'
 
 export default function FounderMessage({ onAction }) {
   return (
@@ -27,21 +28,7 @@ export default function FounderMessage({ onAction }) {
           onClick={() => onAction('Watch Video Message')}
           aria-label="Play founder video message from Hao Zhang"
         >
-          <span className="video-stage">
-            <span className="video-ambiance" aria-hidden="true" />
-            <img
-              className="video-portrait"
-              src="/images/hao-zhang.webp"
-              alt=""
-              width="800"
-              height="800"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
-          <span className="play-button" aria-hidden="true">
-            <Play size={28} fill="currentColor" />
-          </span>
+          <MediaPlaceholder variant="video" label="Founder video coming soon" />
         </button>
       </div>
     </section>

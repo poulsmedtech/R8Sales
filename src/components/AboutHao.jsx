@@ -1,5 +1,6 @@
 import { Building2, UserRound, Users } from 'lucide-react'
 import { audiences, partners } from '../data/content'
+import MediaPlaceholder from './MediaPlaceholder'
 
 const audienceIcons = {
   user: UserRound,
@@ -12,14 +13,7 @@ export default function AboutHao() {
     <section className="about" id="about">
       <div className="container about-grid">
         <figure className="about-photo">
-          <img
-            src="/images/hao-zhang.webp"
-            alt="Portrait of Hao Zhang, founder of R8 Sales"
-            width="800"
-            height="800"
-            loading="lazy"
-            decoding="async"
-          />
+          <MediaPlaceholder variant="portrait" label="Founder portrait coming soon" />
         </figure>
 
         <div className="about-copy">
