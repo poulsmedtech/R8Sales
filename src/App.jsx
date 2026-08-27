@@ -53,6 +53,8 @@ export default function App() {
         note={modal?.note}
         paragraphs={modal?.paragraphs}
         eyebrow={modal?.eyebrow}
+        icon={modal?.icon}
+        tone={modal?.tone}
         contacts={modal?.contacts}
         onClose={closeModal}
       />

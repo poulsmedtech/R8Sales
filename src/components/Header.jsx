@@ -6,9 +6,9 @@ import useActiveSection from '../hooks/useActiveSection'
 
 const navLinks = [
   { label: 'Home', href: '#home', id: 'home' },
+  { label: 'Why R8', href: '#why-r8', id: 'why-r8' },
   { label: 'Opportunities', href: '#opportunities', id: 'opportunities', hasMenu: true },
   { label: 'About Hao', href: '#about', id: 'about' },
-  { label: 'Why R8', href: '#why-r8', id: 'why-r8' },
   { label: 'Join R8', href: '#join', id: 'join' },
 ]
 

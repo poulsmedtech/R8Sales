@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 import { opportunities } from './data/content'
@@ -51,15 +51,15 @@ test('opens Contact Us with Call and Email actions that match the footer details
 
   const dialog = screen.getByRole('dialog', { name: 'Contact Us' })
   expect(within(dialog).getByText(/Call or email R8 Sales Group directly/i)).toBeInTheDocument()
-  expect(within(dialog).getByRole('link', { name: '(626) 389-2168' })).toHaveAttribute(
+  expect(within(dialog).getByRole('link', { name: '(626) 888-0845' })).toHaveAttribute(
     'href',
-    'tel:+16263892168',
+    'tel:+16268880845',
   )
   expect(within(dialog).getByRole('link', { name: 'hao@r8salesgroup.com' })).toHaveAttribute(
     'href',
     'mailto:hao@r8salesgroup.com',
   )
-  expect(within(dialog).getByRole('link', { name: 'Call' })).toHaveAttribute('href', 'tel:+16263892168')
+  expect(within(dialog).getByRole('link', { name: 'Call' })).toHaveAttribute('href', 'tel:+16268880845')
   expect(within(dialog).getByRole('link', { name: 'Email' })).toHaveAttribute(
     'href',
     'mailto:hao@r8salesgroup.com',
@@ -235,16 +235,35 @@ test('Explore Our Opportunities navigates in page instead of opening a modal', a
   expect(document.getElementById('opportunities')).toHaveFocus()
 })
 
-test('renders primary navigation and keeps the founder video as a placeholder', () => {
+test('renders primary navigation in the requested order and keeps the founder video as a placeholder', () => {
   renderApp()
 
-  expect(screen.getAllByRole('link', { name: 'Home' }).length).toBeGreaterThan(0)
-  expect(screen.getAllByRole('link', { name: 'Opportunities' }).length).toBeGreaterThan(0)
-  expect(screen.getAllByRole('link', { name: 'About Hao' }).length).toBeGreaterThan(0)
-  expect(screen.getAllByRole('link', { name: 'Why R8' }).length).toBeGreaterThan(0)
-  expect(screen.getAllByRole('link', { name: 'Join R8' }).length).toBeGreaterThan(0)
+  const desktopNav = document.querySelector('.desktop-nav')
+  const desktopLabels = [...desktopNav.querySelectorAll(':scope > a, :scope > .nav-item > a')].map(
+    (link) => link.textContent.trim(),
+  )
+  expect(desktopLabels).toEqual(['Home', 'Why R8', 'Opportunities', 'About Hao', 'Join R8'])
+
+  const mobileNav = document.querySelector('.mobile-nav nav')
+  const mobileLabels = [...mobileNav.querySelectorAll(':scope > a, :scope > div > .mobile-opps-row > a')].map(
+    (link) => link.textContent.trim(),
+  )
+  expect(mobileLabels).toEqual(['Home', 'Why R8', 'Opportunities', 'About Hao', 'Join R8'])
+
   expect(screen.getByText('Founder video coming soon')).toBeInTheDocument()
   expect(screen.queryByText('Founder portrait coming soon')).not.toBeInTheDocument()
+})
+
+test('keeps the Opportunities disclosure and program deep links', () => {
+  renderApp()
+
+  const disclosure = screen.getByRole('button', { name: 'Show opportunities' })
+  fireEvent.click(disclosure)
+
+  expect(disclosure).toHaveAttribute('aria-expanded', 'true')
+  const dropdown = document.querySelector('.nav-dropdown')
+  expect(dropdown).not.toHaveAttribute('hidden')
+  expect([...dropdown.querySelectorAll('a')].map((link) => link.textContent.trim())).toEqual(PROGRAM_TITLES)
 })
 
 test('renders the generated founder portrait in About Hao', () => {
@@ -286,10 +305,108 @@ test('source metadata and package files use R8 Sales Group and the production do
   expect(html).toContain('content="https://r8salesgroup.com/og-image.jpg"')
   expect(html).toContain('"url": "https://r8salesgroup.com/"')
   expect(html).toContain('hao@r8salesgroup.com')
+  expect(html).toContain('"telephone": "+1-626-888-0845"')
   expect(html).not.toContain('hao@r8marketing.com')
+  expect(html).not.toContain('(626) 389-2168')
+  expect(html).not.toContain('+1-626-389-2168')
   expect(html).not.toMatch(OLD_BRAND)
   expect(pkg).toContain('"name": "r8-sales-group"')
   expect(favicon).toContain('aria-label="R8 Sales Group"')
   expect(robots).toContain('Sitemap: https://r8salesgroup.com/sitemap.xml')
   expect(sitemap).toContain('<loc>https://r8salesgroup.com/</loc>')
+})
+
+test('opportunity popups keep approved copy and never show Coming Soon', async () => {
+  const user = userEvent.setup()
+  renderApp()
+
+  for (const item of opportunities) {
+    await user.click(screen.getByRole('button', { name: `Learn more about ${item.title}` }))
+
+    const dialog = screen.getByRole('dialog', { name: item.title })
+    expect(within(dialog).queryByText(/coming soon/i)).not.toBeInTheDocument()
+    expect(dialog.querySelector(`.icon-badge.tone-${item.tone}`)).toBeTruthy()
+    expect(dialog.querySelector('.modal-body').querySelectorAll('p')).toHaveLength(item.details.length)
+    item.details.forEach((paragraph) => {
+      expect(within(dialog).getByText(paragraph)).toBeInTheDocument()
+    })
+
+    await user.click(within(dialog).getByRole('button', { name: 'Close' }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  }
+})
+
+test('Coming soon appears only on the founder video experience', async () => {
+  const user = userEvent.setup()
+  const { container } = renderApp()
+
+  expect(screen.getByText('Founder video coming soon')).toBeInTheDocument()
+  expect(container.textContent.match(/coming soon/gi)).toEqual(['coming soon'])
+
+  await user.click(screen.getByRole('button', { name: 'Watch Video Message' }))
+  const dialog = screen.getByRole('dialog', { name: 'Watch Video Message' })
+  expect(within(dialog).getByText('Coming soon')).toBeInTheDocument()
+  expect(within(dialog).queryByRole('img')).not.toBeInTheDocument()
+})
+
+test('closes a modal from the backdrop and restores focus', async () => {
+  const user = userEvent.setup()
+  renderApp()
+
+  const contactButton = screen.getAllByRole('button', { name: 'Contact Us' })[0]
+  contactButton.focus()
+  await user.click(contactButton)
+  expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+  fireEvent.click(document.querySelector('.modal-backdrop'))
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(contactButton).toHaveFocus()
+})
+
+test('uses equal-height About Hao columns on desktop', () => {
+  renderApp()
+
+  const aboutGrid = document.querySelector('.about-grid')
+  const portrait = document.querySelector('.about-photo')
+  const audience = document.querySelector('.audience-panel')
+
+  expect(aboutGrid).toBeTruthy()
+  expect(portrait).toBeTruthy()
+  expect(audience).toBeTruthy()
+  expect(aboutGrid.contains(portrait)).toBe(true)
+  expect(aboutGrid.contains(audience)).toBe(true)
+  expect(aboutGrid.contains(document.querySelector('.about-copy'))).toBe(true)
+})
+
+test('shows the updated phone number and omits the retired number', () => {
+  const { container } = renderApp()
+
+  const phoneLinks = screen.getAllByRole('link', { name: '(626) 888-0845' })
+  expect(phoneLinks.length).toBeGreaterThan(0)
+  phoneLinks.forEach((link) => {
+    expect(link).toHaveAttribute('href', 'tel:+16268880845')
+  })
+  expect(container.textContent).not.toContain('(626) 389-2168')
+  expect(container.innerHTML).not.toContain('16263892168')
+  expect(container.innerHTML).not.toContain('6263892168')
+})
+
+test('rebuilds the footer without agent-resource links', () => {
+  renderApp()
+
+  const footer = document.querySelector('.site-footer')
+  const quickLinks = within(footer).getByRole('heading', { name: 'Quick Links' }).parentElement
+  expect([...quickLinks.querySelectorAll('a')].map((link) => link.textContent.trim())).toEqual([
+    'Home',
+    'Why R8',
+    'Opportunities',
+    'About Hao',
+  ])
+  expect(within(footer).queryByRole('heading', { name: 'For Agents' })).not.toBeInTheDocument()
+  expect(within(footer).queryByRole('button', { name: 'Training & Resources' })).not.toBeInTheDocument()
+  expect(within(footer).queryByRole('button', { name: 'FAQ' })).not.toBeInTheDocument()
+  expect(within(footer).queryByText('Join R8 Network')).not.toBeInTheDocument()
+  expect(screen.getAllByRole('link', { name: 'Join R8' }).length).toBeGreaterThan(0)
+  expect(screen.getByRole('button', { name: 'Join the R8 Network' })).toBeInTheDocument()
 })

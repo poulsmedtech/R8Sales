@@ -4,15 +4,9 @@ import { contactDetails } from '../data/content'
 
 const quickLinks = [
   { label: 'Home', href: '#home' },
+  { label: 'Why R8', href: '#why-r8' },
   { label: 'Opportunities', href: '#opportunities' },
   { label: 'About Hao', href: '#about' },
-  { label: 'Why R8', href: '#why-r8' },
-]
-
-const agentLinks = [
-  { label: 'Join R8 Network', action: 'Join the R8 Network' },
-  { label: 'Training & Resources', action: 'Training & Resources' },
-  { label: 'FAQ', action: 'FAQ' },
 ]
 
 export default function Footer({ onAction }) {
@@ -30,19 +24,6 @@ export default function Footer({ onAction }) {
             {quickLinks.map((link) => (
               <li key={link.href}>
                 <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h2>For Agents</h2>
-          <ul>
-            {agentLinks.map((link) => (
-              <li key={link.label}>
-                <button type="button" onClick={() => onAction(link.action)}>
-                  {link.label}
-                </button>
               </li>
             ))}
           </ul>

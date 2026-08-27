@@ -1,28 +1,8 @@
 import { useEffect } from 'react'
-import {
-  Activity,
-  ArrowRight,
-  Flame,
-  Gift,
-  HeartHandshake,
-  Phone,
-  Smartphone,
-  Sparkles,
-  Sun,
-} from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { applyOpportunityHash, opportunities } from '../data/content'
+import OpportunityIcon from './OpportunityIcon'
 import useReveal from '../hooks/useReveal'
-
-const icons = {
-  flame: Flame,
-  sun: Sun,
-  handshake: HeartHandshake,
-  smartphone: Smartphone,
-  phone: Phone,
-  activity: Activity,
-  gift: Gift,
-  sparkles: Sparkles,
-}
 
 export default function Opportunities({ onLearnMore }) {
   const { ref, revealClass } = useReveal()
@@ -46,9 +26,7 @@ export default function Opportunities({ onLearnMore }) {
         </div>
 
         <ul className="opportunity-grid">
-          {opportunities.map((item) => {
-            const Icon = icons[item.icon]
-            return (
+          {opportunities.map((item) => (
               <li key={item.id}>
                 <button
                   type="button"
@@ -58,7 +36,7 @@ export default function Opportunities({ onLearnMore }) {
                   aria-label={`Learn more about ${item.title}`}
                 >
                   <span className={`icon-badge tone-${item.tone}`} aria-hidden="true">
-                    <Icon size={20} strokeWidth={2.1} />
+                    <OpportunityIcon name={item.icon} />
                   </span>
                   <h3>{item.title}</h3>
                   <p className="card-kicker">{item.subtitle}</p>
@@ -69,8 +47,7 @@ export default function Opportunities({ onLearnMore }) {
                   </span>
                 </button>
               </li>
-            )
-          })}
+          ))}
         </ul>
       </div>
     </section>

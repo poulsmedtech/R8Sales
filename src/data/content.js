@@ -229,8 +229,8 @@ export const audiences = [
 ]
 
 export const contactDetails = {
-  phoneDisplay: '(626) 389-2168',
-  phoneHref: 'tel:+16263892168',
+  phoneDisplay: '(626) 888-0845',
+  phoneHref: 'tel:+16268880845',
   emailDisplay: 'hao@r8salesgroup.com',
   emailHref: 'mailto:hao@r8salesgroup.com',
 }
@@ -238,7 +238,6 @@ export const contactDetails = {
 export const actionDetails = {
   'Contact Us': {
     title: 'Contact Us',
-    eyebrow: null,
     body: 'Call or email R8 Sales Group directly. We welcome questions from agents, managers, and organizations.',
     contacts: {
       phone: {
@@ -257,6 +256,7 @@ export const actionDetails = {
   },
   'Watch Video Message': {
     title: 'Watch Video Message',
+    eyebrow: 'Coming soon',
     body: 'Hao Zhang’s recorded message will play here when the final video is published. This preview does not embed a stand-in video.',
   },
   'Privacy Policy': {
@@ -266,14 +266,6 @@ export const actionDetails = {
   'Terms of Use': {
     title: 'Terms of Use',
     body: 'The terms of use will be published here before the site is used for live applications or account access. This preview does not include legal terms.',
-  },
-  FAQ: {
-    title: 'FAQ',
-    body: 'Answers to common questions from agents and managers will appear here.',
-  },
-  'Training & Resources': {
-    title: 'Training & Resources',
-    body: 'Training materials and resources for agents and managers will be published here.',
   },
 }
 
@@ -289,8 +281,9 @@ export function getActionContent(title) {
 export function getOpportunityContent(item) {
   return {
     title: item.title,
-    eyebrow: null,
     paragraphs: item.details,
+    icon: item.icon,
+    tone: item.tone,
   }
 }
 

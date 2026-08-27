@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef } from 'react'
 import { Mail, Phone, X } from 'lucide-react'
+import OpportunityIcon from './OpportunityIcon'
 
 export default function Modal({
   open,
@@ -8,7 +9,9 @@ export default function Modal({
   message,
   note,
   paragraphs,
-  eyebrow = 'Coming soon',
+  eyebrow,
+  icon,
+  tone,
   contacts,
   onClose,
 }) {
@@ -108,7 +111,14 @@ export default function Modal({
             <X size={20} strokeWidth={2.2} aria-hidden="true" />
           </button>
           {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-          <h2 id={titleId}>{title}</h2>
+          <div className="modal-heading">
+            {icon && tone ? (
+              <span className={`icon-badge tone-${tone}`} aria-hidden="true">
+                <OpportunityIcon name={icon} />
+              </span>
+            ) : null}
+            <h2 id={titleId}>{title}</h2>
+          </div>
         </div>
         <div id={descId} className="modal-body">
           {subtitle ? <p className="modal-subtitle">{subtitle}</p> : null}
@@ -143,7 +153,7 @@ export default function Modal({
           {note ? <p className="modal-note">{note}</p> : null}
         </div>
         <div className="modal-footer">
-          <button type="button" className="btn btn-primary" onClick={onClose}>
+          <button type="button" className="btn btn-secondary" onClick={onClose}>
             Close
           </button>
         </div>
