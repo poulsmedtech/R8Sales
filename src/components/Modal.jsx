@@ -7,6 +7,7 @@ export default function Modal({
   subtitle,
   message,
   note,
+  paragraphs,
   eyebrow = 'Coming soon',
   contacts,
   onClose,
@@ -14,6 +15,7 @@ export default function Modal({
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const previousFocus = useRef(null)
+  const scrollY = useRef(0)
   const titleId = useId()
   const descId = useId()
 
@@ -21,6 +23,7 @@ export default function Modal({
     if (!open) return undefined
 
     previousFocus.current = document.activeElement
+    scrollY.current = window.scrollY
     const frame = requestAnimationFrame(() => closeRef.current?.focus())
 
     function getFocusable() {
@@ -59,12 +62,22 @@ export default function Modal({
 
     document.addEventListener('keydown', onKey)
     const previousOverflow = document.body.style.overflow
+    const previousPosition = document.body.style.position
+    const previousTop = document.body.style.top
+    const previousWidth = document.body.style.width
     document.body.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY.current}px`
+    document.body.style.width = '100%'
 
     return () => {
       cancelAnimationFrame(frame)
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = previousOverflow
+      document.body.style.position = previousPosition
+      document.body.style.top = previousTop
+      document.body.style.width = previousWidth
+      window.scrollTo(0, scrollY.current)
       if (previousFocus.current instanceof HTMLElement) {
         previousFocus.current.focus()
       }
@@ -84,19 +97,24 @@ export default function Modal({
         ref={dialogRef}
         onClick={(event) => event.stopPropagation()}
       >
-        <button
-          type="button"
-          className="modal-close"
-          onClick={onClose}
-          ref={closeRef}
-          aria-label="Close dialog"
-        >
-          <X size={20} strokeWidth={2.2} aria-hidden="true" />
-        </button>
-        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-        <h2 id={titleId}>{title}</h2>
-        <div id={descId} className="modal-copy">
+        <div className="modal-header">
+          <button
+            type="button"
+            className="modal-close"
+            onClick={onClose}
+            ref={closeRef}
+            aria-label="Close dialog"
+          >
+            <X size={20} strokeWidth={2.2} aria-hidden="true" />
+          </button>
+          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+          <h2 id={titleId}>{title}</h2>
+        </div>
+        <div id={descId} className="modal-body">
           {subtitle ? <p className="modal-subtitle">{subtitle}</p> : null}
+          {Array.isArray(paragraphs)
+            ? paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+            : null}
           {message ? <p>{message}</p> : null}
           {contacts ? (
             <div className="contact-panel">
@@ -124,9 +142,11 @@ export default function Modal({
           ) : null}
           {note ? <p className="modal-note">{note}</p> : null}
         </div>
-        <button type="button" className="btn btn-primary" onClick={onClose}>
-          Close
-        </button>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-primary" onClick={onClose}>
+            Close
+          </button>
+        </div>
       </div>
     </div>
   )

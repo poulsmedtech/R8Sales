@@ -40,7 +40,7 @@ The finished files are written to the `dist` folder.
 - `prompts/` — original build instructions
 - `MockUp1.png` — visual reference for the design
 
-“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards and the founder video still open a matching message. They are ready to be connected later.
+“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards open the approved program details. The founder video still opens a matching message until the recording is published.
 
 The founder video and portrait areas are image-free placeholders until approved assets are ready. Recommended replacement sizes:
 

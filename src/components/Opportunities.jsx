@@ -2,21 +2,21 @@ import { useEffect } from 'react'
 import {
   Activity,
   ArrowRight,
+  Flame,
   Gift,
-  Heart,
+  HeartHandshake,
   Phone,
   Smartphone,
   Sparkles,
   Sun,
-  Zap,
 } from 'lucide-react'
-import { opportunities } from '../data/content'
+import { applyOpportunityHash, opportunities } from '../data/content'
 import useReveal from '../hooks/useReveal'
 
 const icons = {
-  zap: Zap,
+  flame: Flame,
   sun: Sun,
-  heart: Heart,
+  handshake: HeartHandshake,
   smartphone: Smartphone,
   phone: Phone,
   activity: Activity,
@@ -28,19 +28,9 @@ export default function Opportunities({ onLearnMore }) {
   const { ref, revealClass } = useReveal()
 
   useEffect(() => {
-    function emphasizeTarget() {
-      const id = window.location.hash.replace('#', '')
-      const card = opportunities.some((item) => item.id === id)
-        ? document.getElementById(id)
-        : null
-      if (card instanceof HTMLElement) {
-        card.focus({ preventScroll: true })
-      }
-    }
-
-    emphasizeTarget()
-    window.addEventListener('hashchange', emphasizeTarget)
-    return () => window.removeEventListener('hashchange', emphasizeTarget)
+    applyOpportunityHash()
+    window.addEventListener('hashchange', applyOpportunityHash)
+    return () => window.removeEventListener('hashchange', applyOpportunityHash)
   }, [])
 
   return (

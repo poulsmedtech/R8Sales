@@ -29,3 +29,4 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 window.HTMLElement.prototype.scrollIntoView = function scrollIntoView() {}
+window.scrollTo = function scrollTo() {}

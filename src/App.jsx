@@ -51,6 +51,7 @@ export default function App() {
         subtitle={modal?.subtitle}
         message={modal?.body ?? ''}
         note={modal?.note}
+        paragraphs={modal?.paragraphs}
         eyebrow={modal?.eyebrow}
         contacts={modal?.contacts}
         onClose={closeModal}
