@@ -7,3 +7,5 @@ dist
 npm-debug.log*
 .vite
 .preview-shots
+HaoImages/
+.tmp-hao-refs/

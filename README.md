@@ -42,17 +42,14 @@ The finished files are written to the `dist` folder.
 
 “Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards open the approved program details. The founder video still opens a matching message until the recording is published.
 
-The founder video and portrait areas are image-free placeholders until approved assets are ready. Recommended replacement sizes:
-
-- Founder video still or frame: **1600×900** (16:9)
-- Founder portrait: about **1200×1600** (3:4)
+The founder video area remains an image-free placeholder until the approved recording is ready. Recommended replacement size: **1600×900** (16:9). The About Hao portrait is a generated professional headshot at `public/images/hao-zhang-founder.webp`.
 
 ## Credits and local assets
 
 - Night skyline photograph: [Toronto Skyline at night](https://commons.wikimedia.org/wiki/File:Toronto_Skyline_at_night_-b.jpg) by veggiefrog, [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Cropped and converted for this site.
 - Inter and Plus Jakarta Sans are self-hosted. Licenses are in `public/fonts/`.
 
-A production sitemap and absolute social-preview URLs will be added after the live DigitalOcean or custom domain is known. Do not invent that URL in the meantime.
+The live site is **https://r8salesgroup.com**. Canonical, Open Graph, Twitter/X, JSON-LD, sitemap, and robots values use that apex domain.
 
 ## Repository Safety
 
@@ -66,7 +63,7 @@ This project is its own Git repository. It has its own `.git` folder and its own
 - Run Git commands for this website from inside the R8Sales folder only.
 - Do not stage, commit, or push the parent repository while working on R8Sales.
 - Do not force-push or use destructive resets unless the owner explicitly authorizes that.
-- Do not commit secrets, credentials, `.env` files, `node_modules`, or the `dist` build folder.
+- Do not commit secrets, credentials, `.env` files, `node_modules`, the `dist` build folder, or private source photos in `HaoImages`.
 
 ## DigitalOcean App Platform settings
 
@@ -88,4 +85,4 @@ Use these values:
 1. Confirm the latest commit is visible on GitHub at [poulsmedtech/R8Sales](https://github.com/poulsmedtech/R8Sales).
 2. In DigitalOcean, confirm the app is connected to that repository and branch `main`.
 3. Wait for a successful build after each push to `main`.
-4. Open the URL DigitalOcean provides and review the live site.
+4. Open [https://r8salesgroup.com](https://r8salesgroup.com) and review the live site.

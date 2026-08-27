@@ -231,8 +231,8 @@ export const audiences = [
 export const contactDetails = {
   phoneDisplay: '(626) 389-2168',
   phoneHref: 'tel:+16263892168',
-  emailDisplay: 'hao@r8marketing.com',
-  emailHref: 'mailto:hao@r8marketing.com',
+  emailDisplay: 'hao@r8salesgroup.com',
+  emailHref: 'mailto:hao@r8salesgroup.com',
 }
 
 export const actionDetails = {
@@ -258,18 +258,6 @@ export const actionDetails = {
   'Watch Video Message': {
     title: 'Watch Video Message',
     body: 'Hao Zhang’s recorded message will play here when the final video is published. This preview does not embed a stand-in video.',
-  },
-  LinkedIn: {
-    title: 'LinkedIn',
-    body: 'An official LinkedIn page is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
-  },
-  Facebook: {
-    title: 'Facebook',
-    body: 'An official Facebook page is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
-  },
-  YouTube: {
-    title: 'YouTube',
-    body: 'An official YouTube channel is not linked yet. This control is a placeholder so the footer layout can be reviewed.',
   },
   'Privacy Policy': {
     title: 'Privacy Policy',

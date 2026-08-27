@@ -161,7 +161,6 @@ ol {
 .nav-disclosure:focus-visible,
 .menu-toggle:focus-visible,
 .modal-close:focus-visible,
-.social-row button:focus-visible,
 .footer-legal button:focus-visible,
 .site-footer button:focus-visible,
 .video-card:focus-visible,
@@ -999,8 +998,14 @@ section[id],
   height: auto;
 }
 
-.about-photo .media-placeholder {
-  display: flex;
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 16%;
+  border-radius: 8px;
 }
 
 .about-copy p,
@@ -1131,8 +1136,8 @@ section[id],
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 0.9fr 1fr 1.3fr;
-  gap: 20px;
+  grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
+  gap: 28px 24px;
 }
 
 .footer-brand p,
@@ -1180,27 +1185,6 @@ section[id],
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.social-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.social-row button {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--gray-200);
-  border-radius: 50%;
-  color: var(--navy-800);
-}
-
-.social-row button:hover {
-  background: var(--gray-50);
-  color: var(--blue-700);
 }
 
 .footer-legal {

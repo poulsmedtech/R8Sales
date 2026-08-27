@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-# Add a Sitemap line here after the live production domain is known.
+Sitemap: https://r8salesgroup.com/sitemap.xml

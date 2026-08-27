@@ -55,15 +55,16 @@ test('opens Contact Us with Call and Email actions that match the footer details
     'href',
     'tel:+16263892168',
   )
-  expect(within(dialog).getByRole('link', { name: 'hao@r8marketing.com' })).toHaveAttribute(
+  expect(within(dialog).getByRole('link', { name: 'hao@r8salesgroup.com' })).toHaveAttribute(
     'href',
-    'mailto:hao@r8marketing.com',
+    'mailto:hao@r8salesgroup.com',
   )
   expect(within(dialog).getByRole('link', { name: 'Call' })).toHaveAttribute('href', 'tel:+16263892168')
   expect(within(dialog).getByRole('link', { name: 'Email' })).toHaveAttribute(
     'href',
-    'mailto:hao@r8marketing.com',
+    'mailto:hao@r8salesgroup.com',
   )
+  expect(dialog.textContent).not.toContain('hao@r8marketing.com')
 })
 
 test('renders the eight revised program titles in order and omits retired names', () => {
@@ -234,7 +235,7 @@ test('Explore Our Opportunities navigates in page instead of opening a modal', a
   expect(document.getElementById('opportunities')).toHaveFocus()
 })
 
-test('renders primary navigation and founder media placeholders', () => {
+test('renders primary navigation and keeps the founder video as a placeholder', () => {
   renderApp()
 
   expect(screen.getAllByRole('link', { name: 'Home' }).length).toBeGreaterThan(0)
@@ -243,18 +244,52 @@ test('renders primary navigation and founder media placeholders', () => {
   expect(screen.getAllByRole('link', { name: 'Why R8' }).length).toBeGreaterThan(0)
   expect(screen.getAllByRole('link', { name: 'Join R8' }).length).toBeGreaterThan(0)
   expect(screen.getByText('Founder video coming soon')).toBeInTheDocument()
-  expect(screen.getByText('Founder portrait coming soon')).toBeInTheDocument()
+  expect(screen.queryByText('Founder portrait coming soon')).not.toBeInTheDocument()
 })
 
-test('source metadata and package files use R8 Sales Group', () => {
+test('renders the generated founder portrait in About Hao', () => {
+  renderApp()
+
+  const portrait = screen.getByRole('img', {
+    name: 'Professional portrait of Hao Zhang, founder of R8 Sales Group',
+  })
+  expect(portrait).toHaveAttribute('src', '/images/hao-zhang-founder.webp')
+})
+
+test('uses the new email and omits Nationwide and social controls', () => {
+  const { container } = renderApp()
+
+  expect(screen.getAllByRole('link', { name: 'hao@r8salesgroup.com' }).length).toBeGreaterThan(0)
+  expect(screen.getByRole('link', { name: 'hao@r8salesgroup.com' })).toHaveAttribute(
+    'href',
+    'mailto:hao@r8salesgroup.com',
+  )
+  expect(container.textContent).not.toContain('hao@r8marketing.com')
+  expect(screen.queryByText('Nationwide')).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'Facebook' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'LinkedIn' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: 'YouTube' })).not.toBeInTheDocument()
+})
+
+test('source metadata and package files use R8 Sales Group and the production domain', () => {
   const html = readFileSync(resolve('index.html'), 'utf8')
   const pkg = readFileSync(resolve('package.json'), 'utf8')
   const favicon = readFileSync(resolve('public/favicon.svg'), 'utf8')
+  const robots = readFileSync(resolve('public/robots.txt'), 'utf8')
+  const sitemap = readFileSync(resolve('public/sitemap.xml'), 'utf8')
 
   expect(html).toContain('<title>R8 Sales Group | Right Opportunities. Right People.</title>')
   expect(html).toContain('content="R8 Sales Group | Right Opportunities. Right People."')
   expect(html).toContain('"name": "R8 Sales Group"')
+  expect(html).toContain('href="https://r8salesgroup.com/"')
+  expect(html).toContain('content="https://r8salesgroup.com/"')
+  expect(html).toContain('content="https://r8salesgroup.com/og-image.jpg"')
+  expect(html).toContain('"url": "https://r8salesgroup.com/"')
+  expect(html).toContain('hao@r8salesgroup.com')
+  expect(html).not.toContain('hao@r8marketing.com')
   expect(html).not.toMatch(OLD_BRAND)
   expect(pkg).toContain('"name": "r8-sales-group"')
   expect(favicon).toContain('aria-label="R8 Sales Group"')
+  expect(robots).toContain('Sitemap: https://r8salesgroup.com/sitemap.xml')
+  expect(sitemap).toContain('<loc>https://r8salesgroup.com/</loc>')
 })

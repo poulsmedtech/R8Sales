@@ -1,4 +1,4 @@
-import { Facebook, Linkedin, Mail, MapPin, Phone, Youtube } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
 import Logo from './Logo'
 import { contactDetails } from '../data/content'
 
@@ -59,22 +59,7 @@ export default function Footer({ onAction }) {
               <Mail size={16} aria-hidden="true" />
               <a href={contactDetails.emailHref}>{contactDetails.emailDisplay}</a>
             </li>
-            <li>
-              <MapPin size={16} aria-hidden="true" />
-              Nationwide
-            </li>
           </ul>
-          <div className="social-row">
-            <button type="button" aria-label="Facebook" onClick={() => onAction('Facebook')}>
-              <Facebook size={16} aria-hidden="true" />
-            </button>
-            <button type="button" aria-label="LinkedIn" onClick={() => onAction('LinkedIn')}>
-              <Linkedin size={16} aria-hidden="true" />
-            </button>
-            <button type="button" aria-label="YouTube" onClick={() => onAction('YouTube')}>
-              <Youtube size={16} aria-hidden="true" />
-            </button>
-          </div>
         </div>
       </div>
 

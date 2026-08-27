@@ -16,7 +16,7 @@ export default function useReveal() {
           observer.disconnect()
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.01, rootMargin: '0px 0px -48px 0px' },
     )
 
     const rect = el.getBoundingClientRect()
