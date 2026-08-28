@@ -40,9 +40,7 @@ The finished files are written to the `dist` folder.
 - `prompts/` — original build instructions
 - `MockUp1.png` — visual reference for the design
 
-“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards open the approved program details. The founder video still opens a matching message until the recording is published.
-
-The founder video area remains an image-free placeholder until the approved recording is ready. Recommended replacement size: **1600×900** (16:9). The About Hao portrait is a generated professional headshot at `public/images/hao-zhang-founder.webp`.
+“Explore Our Opportunities” and “View All Opportunities” scroll to the programs section. Contact Us opens a panel with the same phone and email shown in the footer, including Call and Email actions. Opportunity cards open the approved program details. The founder video is Hao Zhang’s [R8 Sales Group Intro Video](https://youtu.be/JyPWqR_0E4I) embedded in the page. The About Hao portrait is a generated professional headshot at `public/images/hao-zhang-founder.webp`.
 
 ## Credits and local assets
 

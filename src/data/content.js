@@ -228,6 +228,12 @@ export const audiences = [
   },
 ]
 
+export const founderVideo = {
+  id: 'JyPWqR_0E4I',
+  title: 'R8 Sales Group Intro Video from Hao Zhang',
+  embedSrc: 'https://www.youtube-nocookie.com/embed/JyPWqR_0E4I?rel=0&modestbranding=1',
+}
+
 export const contactDetails = {
   phoneDisplay: '(626) 888-0845',
   phoneHref: 'tel:+16268880845',
@@ -253,11 +259,6 @@ export const actionDetails = {
   'Join the R8 Network': {
     title: 'Join the R8 Network',
     body: 'A join request will be available here. This preview does not collect applications or personal information.',
-  },
-  'Watch Video Message': {
-    title: 'Watch Video Message',
-    eyebrow: 'Coming soon',
-    body: 'Hao Zhang’s recorded message will play here when the final video is published. This preview does not embed a stand-in video.',
   },
   'Privacy Policy': {
     title: 'Privacy Policy',

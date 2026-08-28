@@ -37,7 +37,7 @@ export default function App() {
       <Header onAction={openAction} onMenuChange={setMenuOpen} />
       <main id="main-content" tabIndex={-1}>
         <Hero onExplore={goToOpportunities} />
-        <FounderMessage onAction={openAction} />
+        <FounderMessage />
         <Opportunities onLearnMore={openOpportunity} />
         <Benefits />
         <AboutHao />

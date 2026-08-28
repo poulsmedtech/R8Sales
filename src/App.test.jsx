@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
-import { opportunities } from './data/content'
+import { founderVideo, opportunities } from './data/content'
 
 const OLD_BRAND = /R8 Sales(?! Group)|R8 SALES(?! GROUP)/
 
@@ -235,7 +235,7 @@ test('Explore Our Opportunities navigates in page instead of opening a modal', a
   expect(document.getElementById('opportunities')).toHaveFocus()
 })
 
-test('renders primary navigation in the requested order and keeps the founder video as a placeholder', () => {
+test('renders primary navigation in the requested order and embeds the founder video', () => {
   renderApp()
 
   const desktopNav = document.querySelector('.desktop-nav')
@@ -250,8 +250,9 @@ test('renders primary navigation in the requested order and keeps the founder vi
   )
   expect(mobileLabels).toEqual(['Home', 'Why R8', 'Opportunities', 'About Hao', 'Join R8'])
 
-  expect(screen.getByText('Founder video coming soon')).toBeInTheDocument()
-  expect(screen.queryByText('Founder portrait coming soon')).not.toBeInTheDocument()
+  const video = screen.getByTitle(founderVideo.title)
+  expect(video).toHaveAttribute('src', founderVideo.embedSrc)
+  expect(screen.queryByText(/coming soon/i)).not.toBeInTheDocument()
 })
 
 test('keeps the Opportunities disclosure and program deep links', () => {
@@ -336,17 +337,24 @@ test('opportunity popups keep approved copy and never show Coming Soon', async (
   }
 })
 
-test('Coming soon appears only on the founder video experience', async () => {
+test('Watch Video Message plays the embedded founder video instead of a placeholder modal', async () => {
   const user = userEvent.setup()
+  const scrollIntoView = vi.fn()
+  window.HTMLElement.prototype.scrollIntoView = scrollIntoView
   const { container } = renderApp()
 
-  expect(screen.getByText('Founder video coming soon')).toBeInTheDocument()
-  expect(container.textContent.match(/coming soon/gi)).toEqual(['coming soon'])
+  expect(container.textContent).not.toMatch(/coming soon/i)
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: 'Watch Video Message' }))
-  const dialog = screen.getByRole('dialog', { name: 'Watch Video Message' })
-  expect(within(dialog).getByText('Coming soon')).toBeInTheDocument()
-  expect(within(dialog).queryByRole('img')).not.toBeInTheDocument()
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(scrollIntoView).toHaveBeenCalled()
+  expect(document.getElementById('founder-video')).toHaveFocus()
+  expect(screen.getByTitle(founderVideo.title)).toHaveAttribute(
+    'src',
+    `${founderVideo.embedSrc}&autoplay=1`,
+  )
 })
 
 test('closes a modal from the backdrop and restores focus', async () => {
